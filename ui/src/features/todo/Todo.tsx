@@ -37,15 +37,27 @@ export const Todo = () => {
 
   if (data) {
     return (
-      <div className="grid w-11/12 place-items-center p-4 shadow-lg md:w-3/4 lg:w-1/2">
+      <div className="grid w-11/12 place-items-center p-4 pb-8 shadow-lg md:w-3/4 lg:w-1/2">
+        <div className="mb-5 flex w-full items-center justify-between gap-2">
+          <input
+            type="text"
+            className="m2-2 w-full border border-gray-400 p-1"
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            id="Layer_1"
+            data-name="Layer 1"
+            viewBox="0 0 24 24"
+            className="size-8 fill-blue-800"
+          >
+            <path d="M19,0H5C2.243,0,0,2.243,0,5v14c0,2.757,2.243,5,5,5h14c2.757,0,5-2.243,5-5V5c0-2.757-2.243-5-5-5Zm-3,13h-3v3c0,.553-.448,1-1,1s-1-.447-1-1v-3h-3c-.552,0-1-.447-1-1s.448-1,1-1h3v-3c0-.553,.448-1,1-1s1,.447,1,1v3h3c.552,0,1,.447,1,1s-.448,1-1,1Z" />
+          </svg>
+        </div>
         {data.map(item => (
           <div
-            className="flex w-full items-center justify-between border-b border-gray-300 py-1"
+            className="flex w-full items-center justify-between py-2"
             key={item.id}
           >
-            <label className="text-gray-700" htmlFor={item.id}>
-              {item.text}
-            </label>
             <div className="flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -70,6 +82,9 @@ export const Todo = () => {
                 <path d="M12,0A12,12,0,1,0,24,12,12,12,0,0,0,12,0Zm4.707,15.293-1.414,1.414L12,13.414,8.707,16.707,7.293,15.293,10.586,12,7.293,8.707,8.707,7.293,12,10.586l3.293-3.293,1.414,1.414L13.414,12Z" />
               </svg>
             </div>
+            <label className="text-gray-700" htmlFor={item.id}>
+              {item.text}
+            </label>
           </div>
         ))}
       </div>
