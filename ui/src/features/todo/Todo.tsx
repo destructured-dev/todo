@@ -12,6 +12,13 @@ export const Todo = () => {
     hour12: false,
   }
 
+  const handleAlert = (
+    event: React.MouseEvent<SVGSVGElement>,
+    message: String,
+  ) => {
+    alert(message)
+  }
+
   const friendlyDate = (str: string) => {
     const dateObject = new Date(str)
     return dateObject.toLocaleDateString("en-AU", dateOptions)
@@ -37,11 +44,12 @@ export const Todo = () => {
 
   if (data) {
     return (
-      <div className="grid w-11/12 place-items-center p-4 pb-8 shadow-lg md:w-3/4 lg:w-1/2">
-        <div className="mb-5 flex w-full items-center justify-between gap-2">
+      <div className="mt-4 grid w-11/12 place-items-center bg-white p-4 pb-8 shadow-lg md:w-3/4 lg:w-1/2">
+        <h1 className="pb-6 text-xl font-bold">Things To Do</h1>
+        <div className="striped mb-5 flex w-full items-center justify-between gap-2">
           <input
             type="text"
-            className="m2-2 w-full border border-gray-400 p-1"
+            className="m2-2 w-full rounded border border-gray-400 p-1"
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -73,6 +81,9 @@ export const Todo = () => {
                 </g>
               </svg>
               <svg
+                onClick={event => {
+                  handleAlert(event, "This is an alert")
+                }}
                 xmlns="http://www.w3.org/2000/svg"
                 id="Layer_1"
                 data-name="Layer 1"
@@ -82,9 +93,11 @@ export const Todo = () => {
                 <path d="M12,0A12,12,0,1,0,24,12,12,12,0,0,0,12,0Zm4.707,15.293-1.414,1.414L12,13.414,8.707,16.707,7.293,15.293,10.586,12,7.293,8.707,8.707,7.293,12,10.586l3.293-3.293,1.414,1.414L13.414,12Z" />
               </svg>
             </div>
-            <label className="text-gray-700" htmlFor={item.id}>
-              {item.text}
-            </label>
+            <div className="grid w-full place-items-start pl-6">
+              <label className="text-gray-700" htmlFor={item.id}>
+                {item.text}
+              </label>
+            </div>
           </div>
         ))}
       </div>
