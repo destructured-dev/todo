@@ -38,6 +38,9 @@ def add_todo(todo: schemas.ToDoCreate, db: Session = Depends(get_db)):
     return crud.add_todo(db=db, todo=todo)
 
 @app.patch("/todos/{todo_id}/", response_model=schemas.ToDo)
-def mark_complete(todo_id: str, db: Session = Depends(get_db)):
+def toggle_complete(todo_id: str, db: Session = Depends(get_db)):
     return crud.mark_complete(db, todo_id=todo_id)
-    
+
+@app.delete("/todos/{todo_id}/")
+def delete_todo(todo_id: str, db: Session = Depends(get_db)):
+    return crud.delete_todo(db, todo_id=todo_id)
