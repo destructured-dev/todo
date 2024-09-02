@@ -7,29 +7,59 @@ export interface ToDo {
   isComplete: boolean
 }
 
+export interface AddToDo {
+  text: string
+}
+
 export const todoAPI = createApi({
   reducerPath: "todoAPI",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/" }),
+  tagTypes: ["Todo"],
   endpoints: builder => ({
     getTodos: builder.query<ToDo[], void>({
       query: () => "todos/",
+      providesTags: result =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "Todo", id }) as const),
+              { type: "Todo", id: "LIST" },
+            ]
+          : [{ type: "Todo", id: "LIST" }],
     }),
 
-    addTodo: builder.mutation<ToDo, String>({
+    addTodo: builder.mutation<ToDo, AddToDo>({
       query: newTodo => ({
         url: "todos/",
         method: "POST",
         body: newTodo,
+        headers: {
+          "Content-Type": "application/json",
+        },
       }),
+      invalidatesTags: [{ type: "Todo", id: "LIST" }],
     }),
 
-    closeTodo: builder.mutation<ToDo, void>({
+    toggleTodo: builder.mutation<ToDo, string>({
       query: id => ({
-        url: "todos/${id}",
+        url: `todos/${id}`,
         method: "PATCH",
       }),
+      invalidatesTags: [{ type: "Todo", id: "LIST" }],
+    }),
+
+    deleteTodo: builder.mutation<ToDo, string>({
+      query: id => ({
+        url: `todos/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Todo", id: "LIST" }],
     }),
   }),
 })
 
-export const { useGetTodosQuery } = todoAPI
+export const {
+  useGetTodosQuery,
+  useAddTodoMutation,
+  useToggleTodoMutation,
+  useDeleteTodoMutation,
+} = todoAPI

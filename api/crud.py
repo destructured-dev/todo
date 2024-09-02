@@ -23,10 +23,10 @@ def toggle_complete(db: Session, todo_id: str):
     return db_todo
 
 def get_todos(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.ToDo).offset(skip).limit(limit).all()
+    return db.query(models.ToDo).order_by(models.ToDo.isComplete).order_by(models.ToDo.dateCreated).offset(skip).limit(limit).all()
 
 def delete_todo(db: Session, todo_id: str):
-    db_todo = db.query(models.Todo).filter(models.Todo.id == todo_id).first()
+    db_todo = db.query(models.ToDo).filter(models.ToDo.id == todo_id).first()
     if db_todo:
         db.delete(db_todo)
         db.commit()
